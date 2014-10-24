@@ -17,17 +17,38 @@ int bubble(int A[], int length)
       }
     }
   }
-	for(i=0; i<length; i++) {
-    	printf("%d\n", A[i]);
-	}
 }
 
-int main()
+int main() 
 {
-    int A[] = {12, 13, 13, 5, 8, 7};
-    int length = 6;
-  
-    bubble(A, length);
- 
-    return 0;
+	int i=0;
+	int length;
+	int A[999999];
+	int num;
+	FILE *f;
+	f = fopen("input.txt","r");
+
+	while(fscanf(f,"%d",&num)!=EOF)
+	{
+	   A[i]=num;
+	   i++;
+
+	}
+	length = i;
+	struct timeval start, end;
+
+	gettimeofday(&start, NULL);
+	bubble(A, length-1);
+	gettimeofday(&end, NULL);
+	printf("%d.%06d\n", (int)(end.tv_sec-start.tv_sec), (int)(end.tv_usec-start.tv_usec));
+
+	i = 0;
+	f = fopen("bubble_output.txt", "w");
+	int x;
+	for(x=0; x<length; x++) 
+	{
+	    fprintf(f, "%d\n", A[x]);
+	}
+	return 0;
 }
+  

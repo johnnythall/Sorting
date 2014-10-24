@@ -94,14 +94,46 @@ int bubble(int A[], int length)
   }
 }
 
+int partition(int A[], int p, int r)
+{
+	int i, j;
+	i = p - 1;
+	int x = A[r];
+	
+	for(j = p; j < r; j++)
+	{
+		if(A[j] <= x)
+		{
+			i++;
+			int swap = A[i];
+			A[i] = A[j];
+			A[j] = swap;
+		}
+	}
 
+	A[r] = A[i + 1];
+	A[i + 1] = x;
+	
+	return i + 1;
+}
+
+int quicksort(int A[], int p, int r)
+{
+	if(p < r)
+	{
+		int q = partition(A,p,r);
+		quicksort(A,p, q - 1);
+		quicksort(A,q + 1,r);
+	}
+	return A;
+}
 
 int main()
 {
 	int i=0;
 	int length;
 	FILE *f;
-	int a[100000];
+	int a[999999];
 	int num;
 	f=fopen("input.txt","r");
 	
@@ -132,6 +164,13 @@ int main()
 	bubble(a, length);
 	gettimeofday(&end, NULL);
 	printf("%d.%020d\n", (int)(end.tv_sec-start.tv_sec), (int)(end.tv_usec-start.tv_usec));
+	
+	//Quicksort
+	gettimeofday(&start, NULL);
+	quicksort(a, 0, length-1);
+	gettimeofday(&end, NULL);
+	printf("%d.%020d\n", (int)(end.tv_sec-start.tv_sec), (int)(end.tv_usec-start.tv_usec));
+	
 	
 	return 0;
 }
